@@ -21,14 +21,15 @@ function performQuery(request,response,connection){
 						throw new Error(error);
 				}
 				else{
-				connection.query("create table if not exists t1(id int,name varchar(40))",(error)=>{
+					let values = [[1,'first'],[2,'second'],[3,'third'],[4,'forth'],[5,'fifth']];
+				connection.query("select * from t1",[values],(error,results)=>{
 					if(error){
 						console.log("error is found at 5656"+error);
 						throw error;
 					}
 					else{
 						response.writeHead(200);
-					response.write("connection successful");
+					response.write(JSON.stringify(results));
 					response.end();
 					connection.end();
 					}
