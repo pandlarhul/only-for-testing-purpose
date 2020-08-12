@@ -17,6 +17,31 @@ const server = http.createServer((request, response) => {
 	response.setHeader("Access-Control-Allow-Origin", "*");
 
 	if (urlParameter === "/task1") {
+    const { Client } = require('pg')
+    try{
+      const client = new Client({
+        user: 'rahulbxqqpsmhfaqfql',
+        host: 'ec2-54-86-57-171.compute-1.amazonaws.com',
+        database: 'd5su69dennd4ag',
+        password: '1a9b18726949055634a748ea8cd7461c2eb6be5c776a36fa396305785d3f040c',
+        port: 5432,
+    })
+  client.connect();
+  let value = [[4,'ffff'],[5,'gggg'],[6,'jjjj']];
+  client.query("create table matches(id int,name varchar(40))").
+  then((response)=>{
+    console.log(response.rows);
+    client.end();
+  }).
+  catch((error)=>{
+    console.log(error);
+    client.end();
+  });
+
+  }catch(error){
+    console.log("error= "+error.message);
+}
+
 				response.writeHead(200);
 				response.write("<h1>Hi this is data<h1>");
         response.end();
