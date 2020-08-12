@@ -1,6 +1,6 @@
 const http = require("http");
 const port = process.env.PORT || 3000;
-
+const mysql = require('mysql');
 
 const errorOutput = `<html>
 <body>
@@ -10,42 +10,79 @@ const errorOutput = `<html>
 </body>
 </html>`;
 
+	
+function performQuery(request,response,connection){
+	 	
+	  const mysql = require('mysql')
+			connection.connect((error)=>{
+				if(error)
+				{
+					console.log("error is found="+error.message);
+						throw new Error(error);
+				}
+				else{
+				connection.query("create table if not exists t1(id int,name varchar(40))",(error)=>{
+					if(error){
+						console.log("error is found at 5656"+error);
+						throw error;
+					}
+					else{
+						response.writeHead(200);
+					response.write("connection successful");
+					response.end();
+					connection.end();
+					}
+					});
+			}
+    	});
+		
+}	
+
 
 const server = http.createServer((request, response) => {
 	let urlParameter = request.url;
 	response.setHeader("Content-Type", "text/html");
 	response.setHeader("Access-Control-Allow-Origin", "*");
+	// const config = {
+	// 	    user: 'rahul',
+  //       host: 'localhost',
+  //       database: 'practice',
+  //       password: 'rahul',
+	// 			port: 3306,
+				
+	// }
 
-	if (urlParameter === "/task1") {
-    const { Client } = require('pg')
-    try{
-      const client = new Client({
-        user: 'rahulbxqqpsmhfaqfql',
-        host: 'ec2-54-86-57-171.compute-1.amazonaws.com',
-        database: 'd5su69dennd4ag',
-        password: '1a9b18726949055634a748ea8cd7461c2eb6be5c776a36fa396305785d3f040c',
-        port: 5432,
-    })
-  client.connect();
-  let value = [[4,'ffff'],[5,'gggg'],[6,'jjjj']];
-  client.query("create table matches(id int,name varchar(40))").
-  then((response)=>{
-    console.log(response.rows);
-    client.end();
-  }).
-  catch((error)=>{
-    console.log(error);
-    client.end();
-  });
+const config = {
+		    user: 'b258267de28220',
+        host: 'us-cdbr-east-02.cleardb.com',
+        database: 'heroku_9936182822b94a5',
+        password: '850330cb',
+				port: 3306,
+				
+	}
 
-  }catch(error){
-    console.log("error= "+error.message);
-}
 
-				response.writeHead(200);
-				response.write("<h1>Hi this is data<h1>");
-        response.end();
-  }
+	const connection  = mysql.createConnection(config);
+
+if (urlParameter === "/task1") {
+	try{
+	performQuery(request,response,connection);
+	}catch(error){
+		console.log("calling="+error);
+	}
+}else{
+	response.writeHead(200);
+					response.write("connection Error");
+					response.end();
+}	
+	//mysql://b258267de28220:850330cb@us-cdbr-east-02.cleardb.com/heroku_9936182822b94a5?reconnect=true
+
+	
+
+				// response.writeHead(200);
+				// response.write("<h1>Hi this is data<h1>");
+        // response.end();
+  
 	// } else if (urlParameter === "/winning_matches_per") {
 	// 	fs.readFile(filePath2, "utf-8", (error, data) => {
 	// 		if (error) {
@@ -78,12 +115,12 @@ const server = http.createServer((request, response) => {
 	// 		}
 	// 	});
   // }
-   else {
-		response.setHeader("Content-Type", "text/html");
-		response.writeHead(404);
-		response.write(errorOutput);
-		response.end();
-	}
+  //  else {
+	// 	response.setHeader("Content-Type", "text/html");
+	// 	response.writeHead(404);
+	// 	response.write(errorOutput);
+	// 	response.end();
+	// }
 
 	// fs.readFile(filePath1, "utf-8", (error, data) => {
 	// 	console.log(data);
@@ -99,5 +136,9 @@ const server = http.createServer((request, response) => {
 });
 
 server.listen(port, () => {
-	console.log(`Server running at port ` + port);
+	try{
+		console.log(`Server running at port ` + port);
+	} catch(error){
+		console.log("error");
+	}
 });
