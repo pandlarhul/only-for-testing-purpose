@@ -3,6 +3,7 @@ const package = require('../server/ipl');
 const http = require('http');
 const pathModule = require("path");
 const mysql = require("mysql");
+const { rejects } = require("assert");
 const pwd = __dirname;
 const {PORT,HOST_NAME,USER,PASSWORD,DATABASE_NAME} 
         = require(pwd+"/config");
@@ -18,6 +19,7 @@ const teamsWithWinningMatchesPerYear = package.teamsWithWinningMatchesPerYear;
 const extraRunsPerTeamIn2016 = package.extraRunsPerTeamIn2016;
 const topTenEconomicalBowler = package.topTenEconomicalBowler;
 const executeQuery = package.executeQuery;
+const loadDataQuery = package.loadDataQuery;
 
 
 
@@ -90,17 +92,26 @@ fielder varchar(50)
 const played_match_file_path = 
  "./../data/datasets_323_7768_matches.csv";
 
-const loadData = `LOAD DATA local INFILE '/home/rahul/drive e/mountblue-carriculam/secondweek/ipl-data-project2/src/data/datasets_323_7768_matches.csv' INTO TABLE played_matches  FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS`
+//const loadData = `LOAD DATA local INFILE '/home/rahul/drive e/mountblue-carriculam/secondweek/ipl-data-project2/src/data/datasets_323_7768_matches.csv' INTO TABLE played_matches  FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS`
+
+let loadData = `insert into played_matches values ?`;
 
 //__________created table for played_matches
 executeQuery(connection,played_matches_query).then((result)=>{
   console.log(result);  
 }).then(()=>{
   connection = mysql.createConnection(config);
-  executeQuery(connection,loadData).then((result)=>{
-    console.log(result);
-    })
-}).then(()=>{
+  let filePath = __dirname + "/../data/datasets_323_7768_matches.csv"
+  let played_matches = extractMatchesData(filePath);
+        
+    let values = played_matches.reduce((accumulator,element)=>{
+      accumulator.push(Object.values(element));
+      return accumulator;
+    },[]);
+        loadDataQuery(connection,loadData,[values]);
+      
+
+}).then((result)=>{
   connection = mysql.createConnection(config);
 }).
 catch((err)=>{

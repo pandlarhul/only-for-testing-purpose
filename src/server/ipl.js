@@ -23,7 +23,7 @@ return new Promise((resolve,reject)=>{
 });
 }
 
-function loadData(connection,query,values){
+function loadDataQuery(connection,query,values){
 return new Promise((resolve,reject)=>{
     connection.connect((error)=>{
     if(error){
@@ -108,5 +108,5 @@ module.exports.teamsWithWinningMatchesPerYear = teamsWithWinningMatchesPerYear;
 module.exports.extraRunsPerTeamIn2016 = extraRunsPerTeamIn2016;
 module.exports.topTenEconomicalBowler = topTenEconomicalBowler;
 module.exports.executeQuery = executeQuery;
-module.exports.loadData = loadData;
+module.exports.loadDataQuery = loadDataQuery;
 

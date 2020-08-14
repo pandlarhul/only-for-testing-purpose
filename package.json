@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "build": "^0.1.4",
+    "convert-csv-to-json": "0.0.15",
     "dotenv": "^8.2.0",
     "mysql": "^2.18.1",
     "pg": "^8.3.0"
