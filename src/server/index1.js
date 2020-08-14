@@ -5,8 +5,8 @@ const pathModule = require("path");
 const mysql = require("mysql");
 const { rejects } = require("assert");
 const pwd = __dirname;
-const {PORT,HOST_NAME,USER,PASSWORD,DATABASE_NAME} 
-        = require(pwd+"/config");
+// const {PORT,HOST_NAME,USER,PASSWORD,DATABASE_NAME}
+//         = require(pwd+"/config");
 
 
 
@@ -29,6 +29,19 @@ function writeDataToJsonFile(data,targetFile){
         if (err) {  console.error(err);  return; };
     });
 }
+
+// const PORT = "3306";
+// const HOST_NAME = "us-cdbr-east-02.cleardb.com"
+// const USER = "b258267de28220";
+// const PASSWORD= "850330cb";
+// const DATABASE_NAME = "heroku_9936182822b94a5";
+
+
+const PORT = "3306";
+const HOST_NAME = "localhost"
+const USER = "rahul";
+const PASSWORD= "rahul";
+const DATABASE_NAME = "udar";
 
 
 const config = {
