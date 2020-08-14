@@ -110,25 +110,25 @@ const played_match_file_path =
 let loadData = `insert into played_matches values ?`;
 
 //__________created table for played_matches
-executeQuery(connection,played_matches_query).then((result)=>{
-  console.log(result);  
-}).then(()=>{
-  connection = mysql.createConnection(config);
-  let filePath = __dirname + "/../data/datasets_323_7768_matches.csv"
-  let played_matches = extractMatchesData(filePath);
-  played_matches = played_matches.slice(2);
-    let values = played_matches.reduce((accumulator,element)=>{
-      accumulator.push(Object.values(element));
-      return accumulator;
-    },[]);
-    console.log(values);
-        loadDataQuery(connection,loadData,[values]);
+// executeQuery(connection,played_matches_query).then((result)=>{
+//   console.log(result);  
+// }).then(()=>{
+//   connection = mysql.createConnection(config);
+//   let filePath = __dirname + "/../data/datasets_323_7768_matches.csv"
+//   let played_matches = extractMatchesData(filePath);
+//   played_matches = played_matches.slice(2);
+//     let values = played_matches.reduce((accumulator,element)=>{
+//       accumulator.push(Object.values(element));
+//       return accumulator;
+//     },[]);
+//     console.log(values);
+//         loadDataQuery(connection,loadData,[values]);
       
 
-}).
-catch((err)=>{
-  console.log(err);
-});
+// }).
+// catch((err)=>{
+//   console.log(err);
+// });
 
 //__________load data into played_matches
 // executeQuery(connection,loadData).then((result)=>{
