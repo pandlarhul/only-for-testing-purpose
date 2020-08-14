@@ -103,16 +103,15 @@ executeQuery(connection,played_matches_query).then((result)=>{
   connection = mysql.createConnection(config);
   let filePath = __dirname + "/../data/datasets_323_7768_matches.csv"
   let played_matches = extractMatchesData(filePath);
-        
+  played_matches = played_matches.slice(0,2);
     let values = played_matches.reduce((accumulator,element)=>{
       accumulator.push(Object.values(element));
       return accumulator;
     },[]);
+    console.log(values);
         loadDataQuery(connection,loadData,[values]);
       
 
-}).then((result)=>{
-  connection = mysql.createConnection(config);
 }).
 catch((err)=>{
   console.log(err);
