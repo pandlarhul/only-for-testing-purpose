@@ -169,13 +169,13 @@ winner order by season,winner`;
 // });
 
 
-// //______________extra run conceded per team in year 2016
-// let queryForExtraRunConceded = `select batting_team,
-// sum(extra_runs) as extra_conceded_runs from match_deliveries 
-// where exists 
-// (select id from played_matches where season=2016 and id=match_id)
-// group by batting_team;
-// `;
+//______________extra run conceded per team in year 2016
+let queryForExtraRunConceded = `select batting_team,
+sum(extra_runs) as extra_conceded_runs from match_deliveries 
+where exists 
+(select id from played_matches where season=2016 and id=match_id)
+group by batting_team;
+`;
 // extraRunsPerTeamIn2016(connection,queryForExtraRunConceded).
 // then(((extraRunConceded)=>{
 //   writeDataToJsonFile(extraRunConceded,pwd+"/../output/extraRunPerTeamIn2016.json");
@@ -186,13 +186,13 @@ winner order by season,winner`;
 
 
 // //_______________top ten economical bowler in 2015
-// let queryForEconomicalBowler = `select bowler,
-// sum(total_runs-penalty_runs-bye_runs-legbye_runs)/(count(ball)/6)
-//  economical_rate 
-// from match_deliveries where exists 
-// (select id from played_matches where season=2015 and id=match_id)
-//  group by bowler 
-// order by economical_rate limit 10;`;
+let queryForEconomicalBowler = `select bowler,
+sum(total_runs-penalty_runs-bye_runs-legbye_runs)/(count(ball)/6)
+ economical_rate 
+from match_deliveries where exists 
+(select id from played_matches where season=2015 and id=match_id)
+ group by bowler 
+order by economical_rate limit 10;`;
 
 // topTenEconomicalBowler(connection,queryForEconomicalBowler)
 // .then(((topTenBowler)=>{
@@ -303,13 +303,26 @@ http.createServer((request,response)=>{
     console.log(error.message);
   });
 }else if(urlParameter === '/extra_run_conceded_per_team_2016'){
-        response.writeHead(200);
-    //    response.write((data));
-        response.end();
+     connection = mysql.createConnection(config);
+      extraRunsPerTeamIn2016(connection,queryForExtraRunConceded)
+      .then(((result)=>{
+      response.writeHead(200);
+      response.write(JSON.stringify(result));
+      response.end();
+  
+  })).catch((error)=>{
+    console.log(error.message);
+  });
   }else if(urlParameter === '/top_ten_economical_bowler_2015'){
-        response.writeHead(200);
-     //   response.write((data));
-        response.end();
+      connection = mysql.createConnection(config);
+      extraRunsPerTeamIn2016(connection,queryForEconomicalBowler)
+      .then(((result)=>{
+      response.writeHead(200);
+      response.write(JSON.stringify(result));
+      response.end();
+  })).catch((error)=>{
+    console.log(error.message);
+  });
   }else{
         response.setHeader("Content-Type", "text/html");
         response.writeHead(200);
