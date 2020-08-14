@@ -30,18 +30,18 @@ function writeDataToJsonFile(data,targetFile){
     });
 }
 
-// const PORT = "3306";
-// const HOST_NAME = "us-cdbr-east-02.cleardb.com"
-// const USER = "b258267de28220";
-// const PASSWORD= "850330cb";
-// const DATABASE_NAME = "heroku_9936182822b94a5";
-
-
 const PORT = "3306";
-const HOST_NAME = "localhost"
-const USER = "rahul";
-const PASSWORD= "rahul";
-const DATABASE_NAME = "udar";
+const HOST_NAME = "us-cdbr-east-02.cleardb.com"
+const USER = "b258267de28220";
+const PASSWORD= "850330cb";
+const DATABASE_NAME = "heroku_9936182822b94a5";
+
+
+// const PORT = "3000";
+// const HOST_NAME = "localhost"
+// const USER = "rahul";
+// const PASSWORD= "rahul";
+// const DATABASE_NAME = "udar";
 
 
 const config = {
