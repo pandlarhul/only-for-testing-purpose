@@ -109,7 +109,7 @@ const played_match_file_path =
 
 let loadData = `insert into played_matches values ?`;
 
-//__________created table for played_matches
+// //__________created table for played_matches
 // executeQuery(connection,played_matches_query).then((result)=>{
 //   console.log(result);  
 // }).then(()=>{
@@ -270,6 +270,7 @@ const errorOutput = `<html>
 // }).listen(8080);
 
 
+const port = process.env.PORT || 3000
 
 http.createServer((request,response)=>{
   let urlParameter = request.url;
@@ -311,10 +312,10 @@ http.createServer((request,response)=>{
         response.end();
   }else{
         response.setHeader("Content-Type", "text/html");
-        response.writeHead(204);
+        response.writeHead(200);
         response.write(errorOutput);
         response.end();
     
   }
-}).listen(8080);
+}).listen(port);
 
